@@ -5,9 +5,9 @@ function App() {
   const [showInput, setShowInput] = useState(null);
   const [text, setText] = useState("");
   const [items, setItems] = useState(() => {
-    if (localStorage.getItem("items").length > 0) {
-      const data = JSON.parse(localStorage.getItem("items"));
-      return data;
+    const storedItems = localStorage.getItem("items");
+    if (storedItems && storedItems.length > 0) {
+      return JSON.parse(storedItems);
     } else {
       return [];
     }
@@ -20,13 +20,16 @@ function App() {
       setShowInput("write");
     }
   };
+
   const RandomItem = () => {
     const randomIndex = Math.floor(Math.random() * items.length);
     setRandomItem(items[randomIndex]);
   };
+
   useEffect(() => {
     if (text && text.length === "") setShowInput("close");
   }, [text]);
+
   const handleBtnClick = () => {
     setShowInput((prevShowInput) => {
       if (prevShowInput === "write" && text) {
@@ -46,15 +49,19 @@ function App() {
       return prevShowInput;
     });
   };
+
   const handleRandomBtnClick = () => {
     RandomItem();
   };
+
   const handleDeleteItem = (index) => {
     setItems((prev) => prev.filter((i) => i.id !== index));
   };
+
   useEffect(() => {
     localStorage.setItem("items", JSON.stringify(items));
   }, [items]);
+
   return (
     <div className="container">
       <h2>
