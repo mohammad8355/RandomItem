@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 
 function App() {
@@ -90,7 +88,7 @@ function App() {
         {items &&
           items.map((item) => {
             return (
-              <li className="list-item">
+              <li key={item.id} className="list-item">
                 {item.text}
                 <button
                   onClick={() => handleDeleteItem(item.id)}
